@@ -152,19 +152,19 @@ module Spaceship
        
         # THIS SEEMS IMPORTANT!!!!! (prices / availableTerritories bad)
         def patch_app(app_id: nil, attributes: {}, app_price_tier_id: nil, territory_ids: nil, allow_removing_from_sale: false)
+          relationships = {}
           included = []
 
           # Price tier
           unless app_price_tier_id.nil?
-            relationships = {
-              prices: {
-              data: [
-                {
-                  type: "appPrices",
-                  id: "${price1}"
-                }
-              ]
-            }}
+            # relationships[:prices] = {
+            #   data: [
+            #     {
+            #       type: "appPrices",
+            #       id: "${price1}"
+            #     }
+            #   ]
+            # }
 
             included << {
               type: "appPrices",
@@ -192,9 +192,9 @@ module Spaceship
               { type: "territories", id: id }
             end
             if !territories_data.empty? || allow_removing_from_sale
-              relationships[:availableTerritories] = {
-                data: territories_data
-              }
+              # relationships[:availableTerritories] = {
+              #   data: territories_data
+              # }
             end
           end
 
@@ -1020,17 +1020,17 @@ module Spaceship
 
         def post_app_store_version_release_request(app_store_version_id: nil)
           body = {
-              data: {
-                  type: "appStoreVersionReleaseRequests",
-                  relationships: {
-                      appStoreVersion: {
-                          data: {
-                              type: "appStoreVersions",
-                              id: app_store_version_id
-                          }
-                      }
+            data: {
+              type: "appStoreVersionReleaseRequests",
+              relationships: {
+                appStoreVersion: {
+                  data: {
+                    type: "appStoreVersions",
+                    id: app_store_version_id
                   }
+                }
               }
+            }
           }
 
           tunes_request_client.post("#{Version::V1}/appStoreVersionReleaseRequests", body)
@@ -1047,20 +1047,20 @@ module Spaceship
 
         def post_custom_app_user(app_id: nil, apple_id: nil)
           body = {
-              data: {
-                  type: "customAppUsers",
-                  attributes: {
-                    appleId: apple_id
-                  },
-                  relationships: {
-                      app: {
-                          data: {
-                              type: "apps",
-                              id: app_id
-                          }
-                      }
+            data: {
+              type: "customAppUsers",
+              attributes: {
+                appleId: apple_id
+              },
+              relationships: {
+                app: {
+                  data: {
+                    type: "apps",
+                    id: app_id
                   }
+                }
               }
+            }
           }
 
           tunes_request_client.post("#{Version::V1}/customAppUsers", body)
@@ -1082,21 +1082,21 @@ module Spaceship
 
         def post_custom_app_organization(app_id: nil, device_enrollment_program_id: nil, name: nil)
           body = {
-              data: {
-                  type: "customAppOrganizations",
-                  attributes: {
-                    deviceEnrollmentProgramId: device_enrollment_program_id,
-                    name: name
-                  },
-                  relationships: {
-                      app: {
-                          data: {
-                              type: "apps",
-                              id: app_id
-                          }
-                      }
+            data: {
+              type: "customAppOrganizations",
+              attributes: {
+                deviceEnrollmentProgramId: device_enrollment_program_id,
+                name: name
+              },
+              relationships: {
+                app: {
+                  data: {
+                    type: "apps",
+                    id: app_id
                   }
+                }
               }
+            }
           }
 
           tunes_request_client.post("#{Version::V1}/customAppOrganizations", body)
