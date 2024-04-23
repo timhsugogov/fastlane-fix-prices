@@ -5,7 +5,7 @@ module Deliver
   # Set the app's pricing
   class UploadPriceTier
     def upload(options)
-      return unless options[:price_tier]
+      options[:price_tier] = 0 unless options[:price_tier]
 
       price_tier = options[:price_tier].to_s
 
