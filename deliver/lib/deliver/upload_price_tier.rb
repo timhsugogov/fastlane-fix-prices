@@ -27,7 +27,7 @@ module Deliver
       else
         UI.message("App has no prices yet... Enabling all countries in App Store Connect")
         territory_ids = Spaceship::ConnectAPI::Territory.all.map(&:id)
-        attributes[:availableInNewTerritories] = true
+        # attributes[:availableInNewTerritories] = true
       end
 
       if price_tier == old_price
