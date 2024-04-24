@@ -148,10 +148,43 @@ module Spaceship
         #   array with territory ids will set availability to territories with those ids,
         #   nil will leave app availability on AppStore as is
         # @param allow_removing_from_sale allows for removing app from sale when territory_ids is an empty array
-       
-       
+
+
         # THIS SEEMS IMPORTANT!!!!! (prices / availableTerritories bad)
         def patch_app(app_id: nil, attributes: {}, app_price_tier_id: nil, territory_ids: nil, allow_removing_from_sale: false)
+          app_params = {
+            data: {
+              id: app_id,
+              type: "apps"
+            }
+          }
+
+          territory_params = {
+            data: {
+              id: territory_ids&.first,
+              type: "territories"
+            }
+          }
+
+          price_params = [
+              {
+                id: "${price1}",
+                type: "appPrices"
+              }
+            ]
+
+          price_schedule_body = {
+            data: {
+              relationships: {
+                app: app_params,
+                baseTerritory: territory_params,
+                manualPrices: price_params
+              },
+              type: "appPriceSchedules"
+            }
+          }
+          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+
           relationships = {}
           included = []
 
@@ -187,16 +220,16 @@ module Spaceship
           end
 
           # Territories
-          unless territory_ids.nil?
-            territories_data = territory_ids.map do |id|
-              { type: "territories", id: id }
-            end
-            if !territories_data.empty? || allow_removing_from_sale
+          # unless territory_ids.nil?
+          #   territories_data = territory_ids.map do |id|
+          #     { type: "territories", id: id }
+          #   end
+            # if !territories_data.empty? || allow_removing_from_sale
               # relationships[:availableTerritories] = {
               #   data: territories_data
               # }
-            end
-          end
+            # end
+          # end
 
           # Data
           data = {
