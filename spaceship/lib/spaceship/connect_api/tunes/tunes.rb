@@ -194,7 +194,47 @@ module Spaceship
           }
           body[:included] = included unless included.empty?
 
-          tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
+          patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
+
+
+          # Price update
+          app_params = {
+            data: {
+              id: app_id,
+              type: "apps"
+            }
+          }
+
+          territory_params = {
+            data: {
+              id: territory_ids&.first,
+              type: "territories"
+            }
+          }
+
+          price_params = {
+            data: 
+              [{
+                id: app_price_tier_id.to_s,
+                type: "appPrices"
+              }]
+          }
+
+          price_schedule_body = {
+            data: {
+              relationships: {
+                app: app_params,
+                baseTerritory: territory_params,
+                manualPrices: price_params
+              },
+              type: "appPriceSchedules"
+            }
+          }
+          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+
+
+
+          patch_res
         end
 
         #
