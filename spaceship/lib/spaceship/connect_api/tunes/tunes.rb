@@ -233,12 +233,11 @@ module Spaceship
           }
 
           price_params = {
-            data: [
+            data: 
               {
                 id: "${price1}",
                 type: "appPrices"
               }
-            ]
           }
 
           price_schedule_body = {
@@ -249,11 +248,7 @@ module Spaceship
                 manualPrices: price_params
               },
               type: "appPriceSchedules"
-            },
-            included: [
-              id: "${price1}",
-              type: "appPrices"
-            ]
+            }
           }
           tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
