@@ -228,11 +228,10 @@ module Spaceship
                 manualPrices: price_params
               },
               type: "appPriceSchedules"
-            }
+            },
+            included: []
           }
           tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
-
-
 
           patch_res
         end
