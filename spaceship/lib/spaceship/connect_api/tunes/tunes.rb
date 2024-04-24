@@ -157,15 +157,6 @@ module Spaceship
 
           # Price tier
           unless app_price_tier_id.nil?
-            # relationships[:prices] = {
-            #   data: [
-            #     {
-            #       type: "appPrices",
-            #       id: "${price1}"
-            #     }
-            #   ]
-            # }
-
             included << {
               type: "appPrices",
               id: "${price1}",
@@ -186,18 +177,6 @@ module Spaceship
             }
           end
 
-          # Territories
-          # unless territory_ids.nil?
-          #   territories_data = territory_ids.map do |id|
-          #     { type: "territories", id: id }
-          #   end
-            # if !territories_data.empty? || allow_removing_from_sale
-              # relationships[:availableTerritories] = {
-              #   data: territories_data
-              # }
-            # end
-          # end
-
           # Data
           data = {
             type: "apps",
@@ -215,44 +194,7 @@ module Spaceship
           }
           body[:included] = included unless included.empty?
 
-          patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
-
-          # Price update
-          app_params = {
-            data: {
-              id: app_id,
-              type: "apps"
-            }
-          }
-
-          territory_params = {
-            data: {
-              id: territory_ids&.first,
-              type: "territories"
-            }
-          }
-
-          price_params = {
-            data: 
-              {
-                id: "${price1}",
-                type: "appPrices"
-              }
-          }
-
-          price_schedule_body = {
-            data: {
-              relationships: {
-                app: app_params,
-                baseTerritory: territory_params,
-                manualPrices: price_params
-              },
-              type: "appPriceSchedules"
-            }
-          }
-          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
-
-          patch_res
+          tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
         end
 
         #
