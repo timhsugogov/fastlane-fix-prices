@@ -166,12 +166,14 @@ module Spaceship
             }
           }
 
-          price_params = [
+          price_params = {
+            data: [
               {
                 id: "${price1}",
                 type: "appPrices"
               }
             ]
+          }
 
           price_schedule_body = {
             data: {
