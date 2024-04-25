@@ -155,9 +155,6 @@ module Spaceship
           relationships = {}
           included = []
 
-          price_points = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
-          print("PRICE POINTS")
-
           # Price tier
           unless app_price_tier_id.nil?
             included << {
@@ -197,7 +194,7 @@ module Spaceship
           }
           body[:included] = included unless included.empty?
 
-          # patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
+          patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
 
 
           # Price update
@@ -218,7 +215,7 @@ module Spaceship
           price_params = {
             data: 
               [{
-                id: app_price_tier_id.to_s,
+                id: "${price1}",
                 type: "appPrices"
               }]
           }
@@ -232,27 +229,23 @@ module Spaceship
               },
               type: "appPriceSchedules"
             },
-            # included: [
-            #   {
-            #     id: "${price1}",
-            #     relationships: {
-            #     #   appPricePoint: {
-            #     #     data: {
-            #     #       id: app_price_tier_id.to_s,
-            #     #       type: "appPricePoints"
-            #     #     }
-            #     #   }
-            #     }
-            #   }
-            # ]
+            included: [
+              {
+                relationships: {
+                  appPricePoint: {
+                    data: {
+                      type: "appPricePoints",
+                      id: "${price1}"
+                    }
+                  }
+                }
+              }
+            ]
           }
 
-          # print("PRICE SCHEDULE BODY")
-          # print(price_schedule_body)
-          # tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
-          # patch_res
-          nil
+          patch_res
         end
 
         #
