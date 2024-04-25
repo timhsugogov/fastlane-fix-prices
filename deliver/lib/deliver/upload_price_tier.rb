@@ -37,12 +37,6 @@ module Deliver
         return
       end
 
-      UI.message("attributes:")
-      UI.message(attributes)
-      UI.message("app price tier id")
-      UI.message(price_tier)
-      UI.message(territory_ids)
-      
       app.update(attributes: attributes, app_price_tier_id: price_tier, territory_ids: territory_ids)
       UI.success("Successfully updated the pricing from #{old_price} to #{price_tier}")
     end

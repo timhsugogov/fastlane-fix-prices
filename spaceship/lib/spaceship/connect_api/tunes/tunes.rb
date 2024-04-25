@@ -157,7 +157,7 @@ module Spaceship
 
           price_points = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
           print("PRICE POINTS")
-          print(price_points)
+          print(price_points&.data)
 
           # Price tier
           unless app_price_tier_id.nil?
@@ -252,7 +252,8 @@ module Spaceship
           # print(price_schedule_body)
           # tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
-          patch_res
+          # patch_res
+          nil
         end
 
         #
