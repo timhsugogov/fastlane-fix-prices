@@ -155,6 +155,10 @@ module Spaceship
           relationships = {}
           included = []
 
+          price_points = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
+          print("PRICE POINTS")
+          print(price_points)
+
           # Price tier
           unless app_price_tier_id.nil?
             included << {
@@ -194,7 +198,7 @@ module Spaceship
           }
           body[:included] = included unless included.empty?
 
-          patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
+          # patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
 
 
           # Price update
@@ -207,7 +211,7 @@ module Spaceship
 
           territory_params = {
             data: {
-              id: territory_ids&.first,
+              id: "USA", # USA is hardcoded
               type: "territories"
             }
           }
@@ -244,9 +248,9 @@ module Spaceship
             # ]
           }
 
-          print("PRICE SCHEDULE BODY")
-          print(price_schedule_body)
-          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+          # print("PRICE SCHEDULE BODY")
+          # print(price_schedule_body)
+          # tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
           patch_res
         end
