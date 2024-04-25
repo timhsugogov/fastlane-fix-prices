@@ -198,52 +198,52 @@ module Spaceship
 
 
           # Price update
-          app_params = {
-            data: {
-              id: app_id,
-              type: "apps"
-            }
-          }
+          # app_params = {
+          #   data: {
+          #     id: app_id,
+          #     type: "apps"
+          #   }
+          # }
 
-          territory_params = {
-            data: {
-              id: "USA", # USA is hardcoded
-              type: "territories"
-            }
-          }
+          # territory_params = {
+          #   data: {
+          #     id: "USA", # USA is hardcoded
+          #     type: "territories"
+          #   }
+          # }
 
-          price_params = {
-            data: 
-              [{
-                id: "${price1}",
-                type: "appPrices"
-              }]
-          }
+          # price_params = {
+          #   data: 
+          #     [{
+          #       id: "${price1}",
+          #       type: "appPrices"
+          #     }]
+          # }
 
-          price_schedule_body = {
-            data: {
-              relationships: {
-                app: app_params,
-                baseTerritory: territory_params,
-                manualPrices: price_params
-              },
-              type: "appPriceSchedules"
-            },
-            included: [
-              {
-                relationships: {
-                  appPricePoint: {
-                    data: {
-                      type: "appPricePoints",
-                      id: "${price1}"
-                    }
-                  }
-                }
-              }
-            ]
-          }
+          # price_schedule_body = {
+          #   data: {
+          #     relationships: {
+          #       app: app_params,
+          #       baseTerritory: territory_params,
+          #       manualPrices: price_params
+          #     },
+          #     type: "appPriceSchedules"
+          #   },
+          #   included: [
+          #     {
+          #       relationships: {
+          #         appPricePoint: {
+          #           data: {
+          #             type: "appPricePoints",
+          #             id: "${price1}"
+          #           }
+          #         }
+          #       }
+          #     }
+          #   ]
+          # }
 
-          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+          # tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
           patch_res
         end
