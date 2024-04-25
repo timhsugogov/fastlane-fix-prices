@@ -157,7 +157,6 @@ module Spaceship
 
           price_points = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
           print("PRICE POINTS")
-          print(price_points&.data)
 
           # Price tier
           unless app_price_tier_id.nil?
