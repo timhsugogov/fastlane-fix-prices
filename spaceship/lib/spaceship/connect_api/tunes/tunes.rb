@@ -229,8 +229,22 @@ module Spaceship
               },
               type: "appPriceSchedules"
             },
-            included: []
+            included: [
+              {
+                relationships: {
+                  appPricePoint: {
+                    data: {
+                      id: app_price_tier_id.to_s,
+                      type: "appPricePoints"
+                    }
+                  }
+                }
+              }
+            ]
           }
+
+          print("PRICE SCHEDULE BODY")
+          print(price_schedule_body)
           tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
           patch_res
