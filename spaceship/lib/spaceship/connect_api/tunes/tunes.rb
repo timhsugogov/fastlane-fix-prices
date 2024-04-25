@@ -229,18 +229,19 @@ module Spaceship
               },
               type: "appPriceSchedules"
             },
-            included: [
-              {
-                relationships: {
-                  appPricePoint: {
-                    data: {
-                      id: app_price_tier_id.to_s,
-                      type: "appPricePoints"
-                    }
-                  }
-                }
-              }
-            ]
+            # included: [
+            #   {
+            #     id: "${price1}",
+            #     relationships: {
+            #     #   appPricePoint: {
+            #     #     data: {
+            #     #       id: app_price_tier_id.to_s,
+            #     #       type: "appPricePoints"
+            #     #     }
+            #     #   }
+            #     }
+            #   }
+            # ]
           }
 
           print("PRICE SCHEDULE BODY")
@@ -1240,6 +1241,7 @@ module Spaceship
           tunes_request_client.get("#{Version::V1}/reviewSubmissions/#{review_submission_id}/items", params)
         end
 
+        # this is failing.. also look at the relationships
         def post_review_submission_item(review_submission_id:, app_store_version_id: nil)
           body = {
             data: {

@@ -5,7 +5,9 @@ module Deliver
   # Set the app's pricing
   class UploadPriceTier
     def upload(options)
-      options[:price_tier] = 0 unless options[:price_tier]
+      UI.message("APP PRICE TIER")
+      UI.message(options[:price_tier])
+      return unless options[:price_tier]
 
       price_tier = options[:price_tier].to_s
 
@@ -35,6 +37,12 @@ module Deliver
         return
       end
 
+      UI.message("attributes:")
+      UI.message(attributes)
+      UI.message("app price tier id")
+      UI.message(price_tier)
+      UI.message(territory_ids)
+      
       app.update(attributes: attributes, app_price_tier_id: price_tier, territory_ids: territory_ids)
       UI.success("Successfully updated the pricing from #{old_price} to #{price_tier}")
     end
