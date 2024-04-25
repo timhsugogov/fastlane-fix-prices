@@ -27,7 +27,7 @@ module Deliver
       # app_prices = app.prices
       app_prices = [0]
       if app_prices&.first
-        app_price = Spaceship::ConnectAPI.get_app_price(app_price_id: 0, includes: "priceTier").first
+        # app_price = Spaceship::ConnectAPI.get_app_price(app_price_id: 0, includes: "priceTier").first
         # old_price = app_price.price_tier.id
       else
         UI.message("App has no prices yet... Enabling all countries in App Store Connect")
@@ -40,7 +40,7 @@ module Deliver
       #   return
       # end
 
-      app.update(attributes: attributes, app_price_tier_id: price_tier, territory_ids: territory_ids)
+      app.update(attributes: attributes, app_price_tier_id: 0, territory_ids: territory_ids)
       # UI.success("Successfully updated the pricing from #{old_price} to #{price_tier}")
     end
   end
