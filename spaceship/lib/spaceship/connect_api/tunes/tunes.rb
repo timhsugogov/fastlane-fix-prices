@@ -195,56 +195,62 @@ module Spaceship
           body[:included] = included unless included.empty?
 
           patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
-          UI.message("PATCH RES")
-          UI.message(patch_res.inspect)
 
           # Price update
-          # app_params = {
-          #   data: {
-          #     id: app_id,
-          #     type: "apps"
-          #   }
-          # }
+          app_params = {
+            data: {
+              id: app_id,
+              type: "apps"
+            }
+          }
 
-          # territory_params = {
-          #   data: {
-          #     id: "USA", # USA is hardcoded
-          #     type: "territories"
-          #   }
-          # }
+          territory_params = {
+            data: {
+              id: "USA", # USA is hardcoded
+              type: "territories"
+            }
+          }
 
-          # price_params = {
-          #   data: 
-          #     [{
-          #       id: "${price1}",
-          #       type: "appPrices"
-          #     }]
-          # }
+          price_params = {
+            data:
+              [{
+                id: "${price1}",
+                type: "appPrices"
+              }]
+          }
 
-          # price_schedule_body = {
-          #   data: {
-          #     relationships: {
-          #       app: app_params,
-          #       baseTerritory: territory_params,
-          #       manualPrices: price_params
-          #     },
-          #     type: "appPriceSchedules"
-          #   },
-          #   included: [
-          #     {
-          #       relationships: {
-          #         appPricePoint: {
-          #           data: {
-          #             type: "appPricePoints",
-          #             id: "${price1}"
-          #           }
-          #         }
-          #       }
-          #     }
-          #   ]
-          # }
+          price_schedule_body = {
+            data: {
+              relationships: {
+                app: app_params,
+                baseTerritory: territory_params,
+                manualPrices: price_params
+              },
+              type: "appPriceSchedules"
+            },
+            included: [
+              {
+                type: "appPrices",
+                id: "${price1}",
+                relationships: {
+                  app: {
+                    data: {
+                      type: "apps",
+                      id: app_id
+                    }
+                  },
+                  priceTier: {
+                    data: {
+                      type: "appPriceTiers",
+                      id: app_price_tier_id.to_s
+                    }
+                  }
+                }
+              }
+            ]
+          }
 
-          # tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
           patch_res
         end
@@ -1263,6 +1269,7 @@ module Spaceship
               }
             }
           end
+          # Erroring here when no price is found
 
           tunes_request_client.post("#{Version::V1}/reviewSubmissionItems", body)
         end
