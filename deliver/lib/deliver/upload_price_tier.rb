@@ -40,7 +40,12 @@ module Deliver
       #   return
       # end
 
-      app.update(attributes: attributes, app_price_tier_id: 0, territory_ids: territory_ids)
+      begin
+        app.update(attributes: attributes, app_price_tier_id: "0", territory_ids: territory_ids)
+      rescue => e
+        print("ERROR OCCURRED IN UPDATE")
+        print(e)
+      end
       # UI.success("Successfully updated the pricing from #{old_price} to #{price_tier}")
     end
   end
