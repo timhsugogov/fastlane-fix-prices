@@ -236,7 +236,7 @@ module Spaceship
             included: [
               {
                 type: "appPrices",
-                id: "${price1}",
+                # id: "${price1}",
                 relationships: {
                   appPricePoint: {
                     data: {
