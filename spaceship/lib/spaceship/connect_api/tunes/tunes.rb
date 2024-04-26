@@ -233,16 +233,10 @@ module Spaceship
                 type: "appPrices",
                 id: "${price1}",
                 relationships: {
-                  app: {
+                  appPricePoint: {
                     data: {
-                      type: "apps",
-                      id: app_id
-                    }
-                  },
-                  priceTier: {
-                    data: {
-                      type: "appPriceTiers",
-                      id: app_price_tier_id.to_s
+                      type: "appPricePoints",
+                      id: "0"
                     }
                   }
                 }
