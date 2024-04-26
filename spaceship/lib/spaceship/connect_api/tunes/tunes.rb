@@ -236,13 +236,17 @@ module Spaceship
                   appPricePoint: {
                     data: {
                       type: "appPricePoints",
-                      id: "0"
+                      id: app_id
                     }
                   }
                 }
               }
             ]
           }
+
+          print("PRICE POINT RES")
+          price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
+          print(price_point_res.inspect)
 
           tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
