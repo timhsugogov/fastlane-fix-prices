@@ -240,7 +240,7 @@ module Spaceship
                 relationships: {
                   appPricePoint: {
                     data: {
-                      type: "appPricePoints",
+                      type: "appPricePoint",
                       id: price_point_id
                     }
                   }
