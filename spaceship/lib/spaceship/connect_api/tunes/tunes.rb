@@ -195,7 +195,8 @@ module Spaceship
           body[:included] = included unless included.empty?
 
           patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
-
+          UI.message("PATCH RES")
+          UI.message(patch_res.inspect)
 
           # Price update
           # app_params = {
