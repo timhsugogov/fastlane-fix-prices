@@ -219,6 +219,11 @@ module Spaceship
               }]
           }
 
+          price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
+          price_point_id = price_point_res.body["data"][0]["id"]
+          print("PRICE POINT ID")
+          print(price_point_id)
+
           price_schedule_body = {
             data: {
               relationships: {
@@ -236,17 +241,13 @@ module Spaceship
                   appPricePoint: {
                     data: {
                       type: "appPricePoints",
-                      id: app_id
+                      id: price_point_id
                     }
                   }
                 }
               }
             ]
           }
-
-          print("PRICE POINT RES")
-          price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
-          print(price_point_res.inspect)
 
           tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
