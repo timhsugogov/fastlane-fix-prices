@@ -44,7 +44,7 @@ module Deliver
       begin
         update_res = app.update(attributes: attributes, app_price_tier_id: "0", territory_ids: territory_ids)
         print("UPDATE RES")
-        print(update_res)
+        print(update_res.inspect)
       rescue => e
         print("ERROR OCCURRED IN UPDATE")
         print(e)
