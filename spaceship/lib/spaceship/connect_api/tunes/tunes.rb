@@ -196,6 +196,11 @@ module Spaceship
 
           patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
 
+          price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
+          price_point_id = price_point_res.body["data"][0]["id"]
+          print("PRICE POINT ID")
+          print(price_point_id)
+
           # Price update
           app_params = {
             data: {
@@ -214,15 +219,10 @@ module Spaceship
           price_params = {
             data:
               [{
-                id: "${price1}",
+                id: price_point_id,
                 type: "appPrices"
               }]
           }
-
-          price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
-          price_point_id = price_point_res.body["data"][0]["id"]
-          print("PRICE POINT ID")
-          print(price_point_id)
 
           price_schedule_body = {
             data: {
