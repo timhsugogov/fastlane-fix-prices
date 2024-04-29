@@ -195,61 +195,60 @@ module Spaceship
           body[:included] = included unless included.empty?
 
           patch_res = tunes_request_client.patch("#{Version::V1}/apps/#{app_id}", body)
-
-          price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
-          price_point_id = price_point_res.body["data"][0]["id"]
-          print("PRICE POINT ID")
-          print(price_point_id)
+          # price_point_res = tunes_request_client.get("#{Version::V1}/apps/#{app_id}/appPricePoints")
+          # price_point_id = price_point_res.body["data"][0]["id"]
+          # print("PRICE POINT ID")
+          # print(price_point_id)
 
           # Price update
-          app_params = {
-            data: {
-              id: app_id,
-              type: "apps"
-            }
-          }
+          # app_params = {
+          #   data: {
+          #     id: app_id,
+          #     type: "apps"
+          #   }
+          # }
 
-          territory_params = {
-            data: {
-              id: "USA", # USA is hardcoded
-              type: "territories"
-            }
-          }
+          # territory_params = {
+          #   data: {
+          #     id: "USA", # USA is hardcoded
+          #     type: "territories"
+          #   }
+          # }
 
-          price_params = {
-            data:
-              [{
-                id: price_point_id,
-                type: "appPrices"
-              }]
-          }
+          # price_params = {
+          #   data:
+          #     [{
+          #       id: price_point_id,
+          #       type: "appPrices"
+          #     }]
+          # }
 
-          price_schedule_body = {
-            data: {
-              relationships: {
-                app: app_params,
-                baseTerritory: territory_params,
-                manualPrices: price_params
-              },
-              type: "appPriceSchedules"
-            },
-            included: [
-              {
-                type: "appPrices",
-                # id: "${price1}",
-                relationships: {
-                  appPricePoint: {
-                    data: {
-                      type: "appPricePoint",
-                      id: price_point_id
-                    }
-                  }
-                }
-              }
-            ]
-          }
+          # price_schedule_body = {
+          #   data: {
+          #     relationships: {
+          #       app: app_params,
+          #       baseTerritory: territory_params,
+          #       manualPrices: price_params
+          #     },
+          #     type: "appPriceSchedules"
+          #   },
+          #   included: [
+          #     {
+          #       type: "appPrices",
+          #       # id: "${price1}",
+          #       relationships: {
+          #         appPricePoint: {
+          #           data: {
+          #             type: "appPricePoint",
+          #             id: price_point_id
+          #           }
+          #         }
+          #       }
+          #     }
+          #   ]
+          # }
 
-          tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
+          # tunes_request_client.post("#{Version::V1}/appPriceSchedules", price_schedule_body)
 
           patch_res
         end
