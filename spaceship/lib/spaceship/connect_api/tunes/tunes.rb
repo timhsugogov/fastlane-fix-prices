@@ -154,15 +154,6 @@ module Spaceship
 
           # Price tier
           unless app_price_tier_id.nil?
-            relationships[:prices] = {
-              data: [
-                {
-                  type: "appPrices",
-                  id: "${price1}"
-                }
-              ]
-            }
-
             included << {
               type: "appPrices",
               id: "${price1}",
@@ -181,18 +172,6 @@ module Spaceship
                 }
               }
             }
-          end
-
-          # Territories
-          unless territory_ids.nil?
-            territories_data = territory_ids.map do |id|
-              { type: "territories", id: id }
-            end
-            if !territories_data.empty? || allow_removing_from_sale
-              relationships[:availableTerritories] = {
-                data: territories_data
-              }
-            end
           end
 
           # Data
@@ -431,7 +410,7 @@ module Spaceship
 
         def get_available_territories(app_id: nil, filter: {}, includes: nil, limit: nil, sort: nil)
           params = tunes_request_client.build_params(filter: filter, includes: includes, limit: limit, sort: sort)
-          tunes_request_client.get("#{Version::V1}/apps/#{app_id}/availableTerritories", params)
+          tunes_request_client.get("#{Version::V2}/appAvailabilities/#{app_id}/territoryAvailabilities", params)
         end
 
         #
