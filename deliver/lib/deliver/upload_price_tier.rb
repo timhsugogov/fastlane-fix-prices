@@ -5,7 +5,7 @@ module Deliver
   # Set the app's pricing
   class UploadPriceTier
     def upload(options)
-      return unless options[:price_tier]
+      options[:price_tier] = 0 unless options[:price_tier]
 
       price_tier = options[:price_tier].to_s
 
@@ -27,7 +27,7 @@ module Deliver
       else
         UI.message("App has no prices yet... Enabling all countries in App Store Connect")
         territory_ids = Spaceship::ConnectAPI::Territory.all.map(&:id)
-        attributes[:availableInNewTerritories] = true
+        # attributes[:availableInNewTerritories] = true
       end
 
       if price_tier == old_price
